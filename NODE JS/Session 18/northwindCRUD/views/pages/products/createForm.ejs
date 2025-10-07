@@ -1,0 +1,39 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Products Page"}) %>
+<h3>Create New Product</h3>
+<form action="./store" method="post">
+    <div>
+        <label for="productName">Product Name</label>
+        <input type="text" name="ProductName" id="productName" required>
+    </div>
+    <div>
+        <label for="QuantityPerUnit">Quantity Per Unit</label>
+        <input type="text" name="QuantityPerUnit" id="QuantityPerUnit" required>
+    </div>
+    <div>
+        <label for="UnitPrice">Unit Price</label>
+        <input type="number" step="0.01" name="UnitPrice" id="UnitPrice" required>
+    </div>
+    <div>
+        <label for="UnitsInStock">Units In Stock</label>
+        <input type="number" name="UnitsInStock" id="UnitsInStock" required>
+    </div>
+    <div>
+        <label for="UnitsOnOrder">Units On Order</label>
+        <input type="number" name="UnitsOnOrder" id="UnitsOnOrder" required>
+    </div>
+    <div>
+        <label for="ReorderLevel">Reorder Level</label>
+        <input type="number" name="ReorderLevel" id="ReorderLevel" required>
+    </div>
+    <div>
+        <label for="Discontinued">Discontinued</label>
+        <select name="Discontinued" id="Discontinued" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Create New Product" class="btn btn-success">
+    </div>
+</form>
+<%- include('../../partials/siteFooter') %>

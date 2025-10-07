@@ -1,0 +1,27 @@
+<section class="orders-page">
+  <h2>Orders</h2>
+
+<ng-container *ngIf="(userOrders$ | async)?.length; else noOrders">
+  <div class="orders-list">
+    <div class="order" *ngFor="let order of (userOrders$ | async)">
+      <div class="header">
+        <div class="meta">#{{ order.id.slice(0, 8) }} • {{ order.createdAt | date:'medium' }}</div>
+        <div class="totals">
+          <span class="badge">{{ order.totalQuantity || 0 }} items</span>
+          <span class="badge primary" *ngIf="order.totalPrice != null">{{ order.totalPrice | currency }}</span>
+        </div>
+      </div>
+      <ul>
+        <li *ngFor="let item of order.items">{{ item.name }} × {{ item.quantity }}</li>
+      </ul>
+    </div>
+  </div>
+</ng-container>
+
+  <ng-template #noOrders>
+    <p>No orders yet.</p>
+    <p *ngIf="!auth.user()">You need to <a routerLink="/login">login</a> to see your orders.</p>
+  </ng-template>
+</section>
+
+

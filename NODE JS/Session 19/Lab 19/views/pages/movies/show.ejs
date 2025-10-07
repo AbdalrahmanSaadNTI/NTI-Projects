@@ -1,0 +1,24 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Movies Page"}) %>
+
+<%if(onemovie.length > 0) {%>
+    <table border>
+        <tr>
+            <th>movie name</th>
+            <th><%= onemovie[0].title %></th>   <!-- onemovie is array [0] -->
+            <th rowspan="3">
+                <img src="/img/uploades/<%=onemovie[0].thumbnail%>" width="250" alt="">
+            </th>
+        </tr>
+        <tr>
+            <th>movie year</th>
+            <th><%= onemovie[0].year %></th>
+        </tr>
+        
+    </table>
+<%}
+else {%>
+    <h3>No movie with this information !!!</h3>
+<%}%>
+
+
+<%- include('../../partials/siteFooter') %>

@@ -1,0 +1,31 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Customer Page"}) %>
+<% if (customer) { %>
+    <h3>Customer Details</h3>
+    <table class="table table-bordered">
+        <tr><th>Customer ID</th><td><%= customer.id %></td></tr>
+        <tr><th>Contact Name</th><td><%= customer.ContactName %></td></tr>
+        <tr><th>Company Name</th><td><%= customer.CompanyName %></td></tr>
+        <tr><th>Contact Title</th><td><%= customer.ContactTitle %></td></tr>
+        <tr><th>Address</th><td><%= customer.Address %></td></tr>
+        <tr><th>City</th><td><%= customer.City %></td></tr>
+        <tr><th>Region</th><td><%= customer.Region || '' %></td></tr>
+        <tr><th>Postal Code</th><td><%= customer.PostalCode %></td></tr>
+        <tr><th>Country</th><td><%= customer.Country %></td></tr>
+        <tr><th>Phone</th><td><%= customer.Phone %></td></tr>
+        <tr><th>Fax</th><td><%= customer.Fax || '' %></td></tr>
+        <tr>
+            <th>Image</th>
+            <td>
+                <% if (customer.Image) { %>
+                    <img src="<%= customer.Image %>" alt="Customer Image" width="100">
+                <% } else { %>
+                    No image
+                <% } %>
+            </td>
+        </tr>
+    </table>
+<% } else { %>
+    <h3>Customer not found.</h3>
+<% } %>
+<a href="/customers" class="btn btn-secondary">Back to Customers List</a>
+<%- include('../../partials/siteFooter') %>

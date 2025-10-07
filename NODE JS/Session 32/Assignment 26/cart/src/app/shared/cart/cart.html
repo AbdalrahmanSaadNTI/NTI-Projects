@@ -1,0 +1,32 @@
+<section class="cart-page">
+  <h2 class="title">🛒 Your Cart</h2>
+
+  <div class="cart-grid" *ngIf="cart.items().length; else empty">
+    <div class="cart-item" *ngFor="let item of cart.items()">
+      <div class="info">
+        <div class="name">{{ item.name }}</div>
+        <div class="price">{{ item.price | currency }}</div>
+      </div>
+      <div class="qty-controls" aria-label="Quantity controls for {{ item.name }}">
+        <button class="qty-btn" (click)="decrement(item)" aria-label="Decrease quantity">−</button>
+        <span class="qty">{{ item.quantity }}</span>
+        <button class="qty-btn" (click)="increment(item)" aria-label="Increase quantity">+</button>
+      </div>
+      <div class="subtotal">{{ (item.price * item.quantity) | currency }}</div>
+      <button class="remove" (click)="remove(item.id)" aria-label="Remove {{ item.name }}">Remove</button>
+    </div>
+  </div>
+
+  <ng-template #empty>
+    <p class="empty">Your cart is empty.</p>
+  </ng-template>
+
+  <div class="summary">
+    <div>Items: <strong>{{ cart.totalQuantity() }}</strong></div>
+    <div>Total: <strong>{{ cart.totalPrice() | currency }}</strong></div>
+  </div>
+  <div class="actions">
+    <button class="clear" (click)="cart.clearCart()" [disabled]="!cart.items().length">Clear Cart</button>
+    <button class="checkout" [disabled]="!cart.items().length" (click)="saveOrder()">Save Order</button>
+  </div>
+</section>

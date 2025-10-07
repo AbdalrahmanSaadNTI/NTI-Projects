@@ -1,0 +1,44 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Movies Page"}) %>
+
+<h3>Edit movie</h3>
+
+<table>
+    <tr>
+        <td>
+            <form action="../update" method="post" enctype="multipart/form-data">
+                <label for="title">movie Name</label>
+                <input type="text" name="title" id="title" value="<%= onemovie[0].title %>">
+                <br>
+                <label for="year">year</label>
+                <input type="number" name="year" id="year" value="<%= onemovie[0].year %>">
+                <br>
+                <label for="thumbnail">thumbnail</label>
+                <input type="file" name="thumbnail" id="thumbnail" onchange="thumbnailPreviewFn(this);">
+                <br>
+
+                <input type="hidden" name="id" value="<%= onemovie[0].id %>">
+
+                <input type="submit" value="Update movie">
+            </form>
+        </td>
+        <td>
+            <img src="/img/uploades/<%=onemovie[0].thumbnail%>" id="thumbnailPreview" alt="thumbnail preview" style="max-width: 55%; max-height: 55%;">
+        </td>
+    </tr>
+</table>
+
+<script>
+    function thumbnailPreviewFn(inputFile) {
+        var file = inputFile.files[0];
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = () => {
+                document.getElementById("thumbnailPreview").setAttribute("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+
+<%- include('../../partials/siteFooter') %>

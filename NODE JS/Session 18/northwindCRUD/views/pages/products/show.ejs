@@ -1,0 +1,51 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Products Page"}) %>
+<%if (product) { %>
+    <h3>Product Details</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th>Product ID</th>
+            <td><%= product.ProductID %></td>
+        </tr>
+        <tr>
+            <th>Product Name</th>
+            <td><%= product.ProductName %></td>
+        </tr>
+        <tr>
+            <th>Supplier ID</th>
+            <td><%= product.SupplierID %></td>
+        </tr>
+        <tr>
+            <th>Category ID</th>
+            <td><%= product.CategoryID %></td>
+        </tr>
+        <tr>
+            <th>Quantity Per Unit</th>
+            <td><%= product.QuantityPerUnit %></td>
+        </tr>
+        <tr>
+            <th>Unit Price</th>
+            <td><%= product.UnitPrice %></td>
+        </tr>
+        <tr>
+            <th>Units In Stock</th>
+            <td><%= product.UnitsInStock %></td>
+        </tr>
+        <tr>
+            <th>Units On Order</th>
+            <td><%= product.UnitsOnOrder %></td>
+        </tr>
+        <tr>
+            <th>Reorder Level</th>
+            <td><%= product.ReorderLevel %></td>
+        </tr>
+        <tr>
+            <th>Discontinued</th>
+            <td><%= product.Discontinued ? 'Yes' : 'No' %></td>
+        </tr>
+    </table>
+<% } else { %>
+    <h3>Product not found.</h3>
+<% } %>
+    <a href="/products" class="btn btn-secondary">Back to Products List</a>
+
+<%- include('../../partials/siteFooter') %>

@@ -1,0 +1,42 @@
+Homework :
+    - in Wuzzuf_Jobs dataset, use mongo compass to get that :
+        - jobs that requires "photoshop"
+        - jobs that requires "entery level"
+        - jobs that requires 3 years exp or more
+        - jobs outside "cairo" and "Giza"
+
+        - order first 33 company that had required more jobs
+
+        - what are the most required job title
+        - what are the most required job level
+        - where is job location most repeated
+
+Solve :-
+
+	-{ "Skills": { "$regex": "photoshop", "$options": "i" } }	// 165 document
+	-{ "Level": { "$regex": "entry level", "$options": "i" } }	// 1139 document
+	-{ "YearsExp": { "$regex": "3|\\+", "$options": "i" } }		// 2572 document
+	-{ "Location": { "$not": { "$regex": "cairo|giza", "$options": "i" } } }	// 3169 document
+	
+	- Aggregations pipeline :- [
+ 					 { "$group": { "_id": "$Company", "count": { "$sum": 1 } } },
+ 					 { "$sort": { "count": -1 } },
+  					 { "$limit": 33 }
+				   ]	// 33 document
+
+
+	- Aggregations pipeline :- [
+   					 { "$group": { "_id": "$Title", "count": { "$sum": 1 } } },
+   					 { "$sort": { "count": -1 } },
+   					 { "$limit": 1 }
+				   ]	// 1 document
+	- Aggregations pipeline :- [
+   					 { "$group": { "_id": "$Level", "count": { "$sum": 1 } } },
+   					 { "$sort": { "count": -1 } },
+   					 { "$limit": 1 }
+				   ]	// 1 document
+	- Aggregations pipeline :- [
+   					 { "$group": { "_id": "$Location", "count": { "$sum": 1 } } },
+   					 { "$sort": { "count": -1 } },
+   					 { "$limit": 1 }
+				   ]	// 1 document

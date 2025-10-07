@@ -1,0 +1,26 @@
+<%- include('../../partials/siteHeader', { pageTitle: pageTitle || 'Sign in' }) %>
+
+<section class="auth-card">
+    <h2>Sign in</h2>
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert error"><%= error %></div>
+    <% } %>
+    <form method="post" action="/auth/signin">
+        <div class="form-row">
+            <label>User name</label>
+            <input type="text" name="userName" required>
+        </div>
+        <div class="form-row">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+        <div class="form-actions">
+            <button type="submit">Sign in</button>
+            <a class="link" href="/auth/signup">Create an account</a>
+        </div>
+    </form>
+</section>
+
+<%- include('../../partials/siteFooter') %>
+
+

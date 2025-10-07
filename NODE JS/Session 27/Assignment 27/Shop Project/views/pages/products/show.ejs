@@ -1,0 +1,77 @@
+<%- include('../../partials/siteHeader', { pageTitle: pageTitle || "Product Details", user: user }) %>
+
+<% if (oneProduct && oneProduct.length > 0) { %>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Product Details</h2>
+            <a href="/products" class="btn btn-secondary">← Back to Products</a>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
+            <div>
+                <% if (oneProduct[0].photo && oneProduct[0].photo !== '') { %>
+                    <img src="/img/uploads/<%= oneProduct[0].photo %>" alt="<%= oneProduct[0].productName %>" style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <% } else { %>
+                    <div style="width: 100%; height: 300px; background: #f7fafc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #a0aec0; font-size: 1.5rem;">
+                        No Image Available
+                    </div>
+                <% } %>
+            </div>
+            
+            <div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #2d3748;"><%= oneProduct[0].productName %></h3>
+                
+                <div style="margin-bottom: 1rem;">
+                    <strong style="color: #4a5568;">Category:</strong>
+                    <% if (oneProduct[0].category && oneProduct[0].category.categoryName) { %>
+                        <span class="status-badge status-completed"><%= oneProduct[0].category.categoryName %></span>
+                    <% } else { %>
+                        <span style="color: #a0aec0;">No category assigned</span>
+                    <% } %>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                    <strong style="color: #4a5568;">Price:</strong>
+                    <span style="font-size: 1.25rem; font-weight: 700; color: #38a169; margin-left: 0.5rem;">
+                        <% if (oneProduct[0].price) { %>
+                            $<%= oneProduct[0].price %>
+                        <% } else { %>
+                            Not set
+                        <% } %>
+                    </span>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <strong style="color: #4a5568;">Created:</strong>
+                    <span style="margin-left: 0.5rem; color: #718096;">
+                        <%= oneProduct[0].createdAt ? new Date(oneProduct[0].createdAt).toLocaleDateString() : 'Unknown' %>
+                    </span>
+                </div>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <a href="/products/updateForm/<%= oneProduct[0].id %>" class="btn btn-primary">Edit Product</a>
+                    <button onclick="deleteProduct('<%= oneProduct[0].id %>')" class="btn btn-danger">Delete Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } else { %>
+    <div class="card">
+        <div class="empty-state">
+            <div class="empty-state-icon">❌</div>
+            <h3 class="empty-state-title">Product Not Found</h3>
+            <p class="empty-state-description">The product you're looking for doesn't exist or has been removed.</p>
+            <a href="/products" class="btn btn-primary">Back to Products</a>
+        </div>
+    </div>
+<% } %>
+
+<script>
+    function deleteProduct(productId) {
+        if (confirm("Are you sure you want to delete this product? This action cannot be undone.")) {
+            window.location.href = "/products/destroy/" + productId;
+        }
+    }
+</script>
+
+<%- include('../../partials/siteFooter') %>

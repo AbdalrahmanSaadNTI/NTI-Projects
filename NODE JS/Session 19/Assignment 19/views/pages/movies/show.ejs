@@ -1,0 +1,62 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Movie Details"}) %>
+
+<% if(onemovie.length > 0) { 
+    const movie = onemovie[0];
+%>
+    <table border>
+        <tr>
+            <th>Movie Name</th>
+            <td><%= movie.title %></td>
+        </tr>
+        <tr>
+            <th>Year</th>
+            <td><%= movie.year %></td>
+        </tr>
+        <tr>
+            <th>Cast</th>
+            <td>
+                <% if (Array.isArray(movie.cast)) { %>
+                    <%= movie.cast.join(", ") %>
+                <% } else { %>
+                    <%= movie.cast || "" %>
+                <% } %>
+            </td>
+        </tr>
+        <tr>
+            <th>Genres</th>
+            <td>        
+                <% if (Array.isArray(movie.genres)) { %>
+                    <%= movie.genres.join(", ") %>
+                <% } else { %>
+                    <%= movie.genres || "" %>
+                <% } %>
+            </td>
+        </tr>
+        <tr>
+            <th>Href</th>
+            <td>
+                <% if (movie.href) { %>
+                    <a href="<%= movie.href %>" target="_blank"><%= movie.href %></a>
+                <% } %>
+            </td>
+        </tr>
+        <tr>
+            <th>Extract</th>
+            <td><%= movie.extract || "" %></td>
+        </tr>
+        <tr>
+            <th>Thumbnail</th>
+            <td>
+                <% if (movie.thumbnail) { %>
+                    <img id="thumbnailPreview" src="<%= movie.thumbnail.startsWith('http') ? movie.thumbnail : '/img/uploades/' + movie.thumbnail %>" alt="thumbnail" style="max-width:250px;max-height:250px;">
+                <% } else { %>
+                    No thumbnail
+                <% } %>
+            </td>
+        </tr>
+    </table>
+<% } else { %>
+    <h3>No movie with this information !!!</h3>
+<% } %>
+
+<%- include('../../partials/siteFooter') %>

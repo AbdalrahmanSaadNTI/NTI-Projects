@@ -1,0 +1,130 @@
+body {
+    border: 3px red solid;
+    margin: 0 5%;
+    padding: 0 5%;
+}
+h1 {
+    color: blue;
+}
+h2 {
+    color: green;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+}
+th {
+    text-align: left;
+}
+a {
+    text-decoration: none;
+}
+img {
+    width: 100px;
+    height: 100px;
+}
+form {
+    margin: 20px 0;
+}
+input, select {
+    margin: 10px 0;
+}
+button {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: green;
+}
+nav {
+    margin: 20px 0;
+}
+footer {
+    text-align: center;
+    margin: 20px 0;
+}
+footer p {
+    color: gray;
+    font-size: 14px;
+}
+/* ------------- form style ------------------ */
+form {
+    border: 1px solid black;
+    padding: 20px;
+    width: 50%;
+}
+form label {
+    display: block;
+    margin: 10px 0 5px 0;
+}
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+form button {
+    width: auto;
+}
+/* ------------- table style ------------------ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table th {
+    background-color: #f2f2f2;
+}
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+table tr:hover {
+    background-color: #f1f1f1;
+}
+/* ------------- image style ------------------ */
+img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* ------------- navigation style ------------------ */
+nav a {
+    margin: 0 10px;
+    color: blue;
+}
+nav a:hover {
+    color: green;
+}
+/* ------------- footer style ------------------ */
+footer {
+    border-top: 1px solid black;
+    padding: 10px 0;
+}
+footer p {
+    margin: 0;
+}
+/* ------------- responsive design ------------------ */
+@media screen and (max-width: 600px) {
+    body {
+        margin: 0 2%;
+        padding: 0 2%;
+    }
+    form {
+        width: 100%;
+    }
+    table, th, td {
+        font-size: 12px;
+    }
+    img {
+        width: 50px;
+        height: 50px;
+    }
+}

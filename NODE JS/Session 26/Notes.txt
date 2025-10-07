@@ -1,0 +1,18 @@
+Step 1: Start with a design that uses vanilla JavaScript, then integrate Angular into it.
+
+Step 2: The frontend will initially consist of static pages (HTML, CSS, and JS).
+
+Break these static files into reusable components and bind data to them.
+
+Set up pages and configure routing.
+
+Step 3: Open the design (e.g., index.html) and analyze its structure and contents.
+
+Step 4: The site will begin as a single page, but in the future we’ll expand to multiple templates.
+
+Step 5: Place all static files inside the public folder.
+
+Step 6: html page -> select all -> copy -> paste to app component html files.
+
+Step 7: Take all what is before the <body> tag also with the tag to all what is above from given frontend page and put it in the index html page.
+

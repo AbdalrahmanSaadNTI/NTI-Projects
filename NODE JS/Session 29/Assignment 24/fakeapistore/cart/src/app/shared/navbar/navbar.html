@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <div class="brand">
+    <a routerLink="/" class="brand-link">🛍️ Store</a>
+  </div>
+
+  <div class="nav-actions">
+    <a routerLink="/" class="nav-link">Home</a>
+    <a routerLink="/cart" class="cart-link" aria-label="Cart">
+      <span class="icon">🛒</span>
+      <span class="badge" [attr.aria-label]="'Items in cart: ' + cart.totalQuantity()">{{ cart.totalQuantity() }}</span>
+    </a>
+  </div>
+</nav>

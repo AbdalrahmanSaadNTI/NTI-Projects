@@ -1,0 +1,210 @@
+<%- include('../partials/headerLayout.ejs', {pageName: "Edit Movie" , pathLevel: "../" }) %>
+
+<!-- Blank Start -->
+<div class="col-sm-12 col-xl-12 p-4">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Edit Movie</h6>
+
+        <% if (msg) { %>
+            <div class="alert alert-info">
+                <%= msg %>
+            </div>
+        <% } %>
+
+        <% if (movie) { %>
+            <!-- Admin Note Display -->
+            <% if (movie.adminNote) { %>
+                <div class="alert alert-warning mb-4">
+                    <h6><i class="fas fa-exclamation-triangle"></i> Admin Note:</h6>
+                    <p class="mb-0"><%= movie.adminNote %></p>
+                </div>
+            <% } %>
+
+            <form action="/dashboard/updateMovie" method="POST">
+                <input type="hidden" name="movieId" value="<%= movie._id %>">
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="title" id="title" placeholder="title" value="<%= movie.title %>" required>
+                    <label for="title">Movie Title</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select class="form-select" name="year" id="year" required>
+                        <% for (let y=new Date().getFullYear(); y>= 1900; y--) { %>
+                            <option value="<%= y %>" <%= movie.year == y ? 'selected' : '' %>>
+                                <%= y %>
+                            </option>
+                        <% } %>
+                    </select>
+                    <label for="year">Release Year</label>
+                </div>
+
+                <div class="container mt-3">
+                    <h4>Actors</h4>
+
+                    <!-- Actors container -->
+                    <div id="actors-container">
+                        <% if (movie.cast && movie.cast.length > 0) { %>
+                            <% movie.cast.forEach((actor, index) => { %>
+                                <div class="row g-2 mb-2 actor-row">
+                                    <div class="col-10">
+                                        <input type="text" class="form-control" name="actors[]" placeholder="Actor name" value="<%= actor %>">
+                                    </div>
+                                    <div class="col-2 d-grid">
+                                        <button type="button" class="btn btn-danger remove-actor">Remove</button>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="row g-2 mb-2 actor-row">
+                                <div class="col-10">
+                                    <input type="text" class="form-control" name="actors[]" placeholder="Actor name">
+                                </div>
+                                <div class="col-2 d-grid">
+                                    <button type="button" class="btn btn-danger remove-actor">Remove</button>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <!-- Add actor button -->
+                    <button type="button" class="btn btn-success mt-2" id="add-actor">+ Add Actor</button>
+                </div>
+
+                <div class="container mt-3">
+                    <h4>Movie Genres</h4>
+
+                    <!-- Genre selector -->
+                    <div class="row g-2 mb-2">
+                        <div class="col-10">
+                            <select class="form-select" id="genre-select">
+                                <option value="" disabled selected>Select a genre</option>
+                                <option value="Action">Action</option>
+                                <option value="Drama">Drama</option>
+                                <option value="Comedy">Comedy</option>
+                                <option value="Thriller">Thriller</option>
+                                <option value="Sci-Fi">Sci-Fi</option>
+                            </select>
+                        </div>
+                        <div class="col-2 d-grid">
+                            <button type="button" class="btn btn-primary" id="add-genre">Add Movie Genre</button>
+                        </div>
+                    </div>
+
+                    <!-- Selected genres container -->
+                    <div id="selected-genres" class="d-flex flex-wrap gap-2 mt-2">
+                        <% if (movie.genres && movie.genres.length > 0) { %>
+                            <% movie.genres.forEach(genre => { %>
+                                <div class="badge bg-secondary d-flex align-items-center gap-2 p-2">
+                                    <span><%= genre %></span>
+                                    <button type="button" class="btn-close btn-close-white btn-sm"></button>
+                                    <input type="hidden" name="genres[]" value="<%= genre %>">
+                                </div>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <button type="submit" class="btn btn-primary py-3 px-5">Update Movie</button>
+                    <a href="/dashboard/userEditMovie" class="btn btn-secondary py-3 px-5">Cancel</a>
+                </div>
+            </form>
+        <% } else { %>
+            <div class="alert alert-danger">
+                <h5>Movie Not Found</h5>
+                <p>The movie you're trying to edit was not found.</p>
+                <a href="/dashboard/userEditMovie" class="btn btn-primary">Back to My Movies</a>
+            </div>
+        <% } %>
+    </div>
+</div>
+<!-- Blank End -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const container = document.getElementById("actors-container");
+        const addBtn = document.getElementById("add-actor");
+
+        // Function to create a new actor row
+        function createActorRow() {
+            const row = document.createElement("div");
+            row.className = "row g-2 mb-2 actor-row";
+
+            row.innerHTML = `
+                <div class="col-10">
+                    <input type="text" class="form-control" name="actors[]" placeholder="Actor name">
+                </div>
+                <div class="col-2 d-grid">
+                    <button type="button" class="btn btn-danger remove-actor">Remove</button>
+                </div>
+            `;
+
+            // Add remove functionality
+            row.querySelector(".remove-actor").addEventListener("click", () => {
+                row.remove();
+            });
+
+            return row;
+        }
+
+        // Add actor event
+        addBtn.addEventListener("click", () => {
+            const newRow = createActorRow();
+            container.appendChild(newRow);
+        });
+
+        // Attach remove event to existing actor rows
+        document.querySelectorAll(".remove-actor").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.target.closest(".actor-row").remove();
+            });
+        });
+    });
+
+    // Genre management
+    document.addEventListener("DOMContentLoaded", function () {
+        const genreSelect = document.getElementById("genre-select");
+        const addGenreBtn = document.getElementById("add-genre");
+        const selectedGenres = document.getElementById("selected-genres");
+
+        addGenreBtn.addEventListener("click", () => {
+            const value = genreSelect.value;
+            const text = genreSelect.options[genreSelect.selectedIndex]?.text;
+
+            if (!value) return; // ignore if no genre selected
+
+            // prevent duplicate genres
+            if (document.querySelector(`#selected-genres input[value="${value}"]`)) {
+                alert("Genre already added!");
+                return;
+            }
+
+            // create badge container
+            const badge = document.createElement("div");
+            badge.className = "badge bg-secondary d-flex align-items-center gap-2 p-2";
+
+            badge.innerHTML = `
+                <span>${text}</span>
+                <button type="button" class="btn-close btn-close-white btn-sm"></button>
+                <input type="hidden" name="genres[]" value="${value}">
+            `;
+
+            // remove badge on X click
+            badge.querySelector("button").addEventListener("click", () => {
+                badge.remove();
+            });
+
+            selectedGenres.appendChild(badge);
+        });
+
+        // Attach remove event to existing genre badges
+        selectedGenres.querySelectorAll("button").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.target.closest(".badge").remove();
+            });
+        });
+    });
+</script>
+
+<%- include('../partials/footerLayout.ejs', { pathLevel: "../" }) %>

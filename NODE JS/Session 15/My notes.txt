@@ -1,0 +1,10 @@
+    - find document if field does not exist (movies db)
+        {
+            "thumbnail": { "$exists": false }
+        }
+
+OR
+
+        {
+            "thumbnail": null
+        }

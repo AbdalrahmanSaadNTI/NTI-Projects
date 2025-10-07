@@ -1,0 +1,73 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Customers Page"}) %>
+<h1 class="text-center my-4">Customers Page</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-end mb-3">
+            <a href="/customers/createForm" class="btn btn-success">Create New Customer</a>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Contact Name</th>
+                        <th>Company Name</th>
+                        <th>Contact Title</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Region</th>
+                        <th>Postal Code</th>
+                        <th>Country</th>
+                        <th>Phone</th>
+                        <th>Fax</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% customers.forEach((customer) => { %>
+                    <tr>
+                        <td><%= customer.id %></td>
+                        <td><%= customer.ContactName %></td>
+                        <td><%= customer.CompanyName %></td>
+                        <td><%= customer.ContactTitle %></td>
+                        <td><%= customer.Address %></td>
+                        <td><%= customer.City %></td>
+                        <td><%= customer.Region || '' %></td>
+                        <td><%= customer.PostalCode %></td>
+                        <td><%= customer.Country %></td>
+                        <td><%= customer.Phone %></td>
+                        <td><%= customer.Fax || '' %></td>
+                        <td>
+                            <% if (customer.Image) { %>
+                                <img src="<%= customer.Image %>" alt="Customer Image" width="50">
+                            <% } else { %>
+                                No image
+                            <% } %>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 4px;">
+                                <a href="/customers/updateForm/<%= customer.id %>" class="btn btn-primary btn-sm" style="align-content: center;">Edit</a>
+                                <form action="/customers/destroy/<%= customer.id %>?_method=DELETE" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function confirmDelete(event) {
+        if (!confirm('Are you sure you want to delete this customer?')) {
+            event.preventDefault();
+        }
+    }
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', confirmDelete);
+    });
+</script>
+<%- include('../../partials/siteFooter') %>

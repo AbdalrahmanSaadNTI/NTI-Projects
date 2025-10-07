@@ -1,0 +1,70 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Movies Page"}) %>
+
+<div style="text-align:center; margin-bottom: 20px;">
+    <a href="/movies/genre/action"><button>Action</button></a>
+    <a href="/movies/genre/drama"><button>Drama</button></a>
+    <a href="/movies/genre/comedy"><button>Comedy</button></a>
+</div>
+
+<form method="get" action="/movies" style="text-align:center; margin-bottom: 20px;">
+    <input type="text" name="title" placeholder="Search by title..." value="<%= typeof title !== 'undefined' ? title : '' %>">
+    <input type="text" name="cast" placeholder="Search by cast..." value="<%= typeof cast !== 'undefined' ? cast : '' %>">
+    <button type="submit">Search</button>
+</form>
+
+<a href="/movies/createForm">Create New movie</a>
+
+<% if(movies.length > 0) { %>
+    <table border>
+        <tr>
+            <th>#</th>
+            <th>movie Name</th>
+            <th>year</th>
+            <th>Operations</th>
+        </tr>    
+        <% movies.forEach((onemovie, idx) => { %>
+            <tr>
+                <td>
+                    <%= (page - 1) * 20 + idx + 1 %>
+                </td>
+                <th><%= onemovie.title %></th>
+                <th><%= onemovie.year %></th>
+                <th>
+                    <a href="/movies/show/<%=onemovie.id%>">
+                        Details
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="/movies/updateForm/<%=onemovie.id%>">
+                        Update
+                    </a>
+                    &nbsp;&nbsp;&nbsp;
+                    <span onclick="destroy(this);" movieID="<%=onemovie.id%>" style="cursor: pointer;">
+                        Delete
+                    </span>
+                </th>
+            </tr>
+        <% }); %>
+    </table>
+    <div style="text-align:center; margin: 20px 0;">
+        <% if (page > 1) { %>
+            <a href="/movies?page=<%= page - 1 %><%= title ? '&title=' + encodeURIComponent(title) : '' %><%= cast ? '&cast=' + encodeURIComponent(cast) : '' %>">Previous</a>
+        <% } %>
+        Page <%= page %> of <%= totalPages %>
+        <% if (page < totalPages) { %>
+            <a href="/movies?page=<%= page + 1 %><%= title ? '&title=' + encodeURIComponent(title) : '' %><%= cast ? '&cast=' + encodeURIComponent(cast) : '' %>">Next</a>
+        <% } %>
+    </div>
+<% } else { %>
+    <h3>No movies created yet !!!!</h3>
+<% } %>
+
+<script>
+    function destroy(obj){
+        if(confirm("Are You Sure you want to Delete this movie ?")) {
+            id = obj.getAttribute("movieID");
+            window.location.replace("/movies/destroy/" + id);
+        }        
+    }
+</script>
+
+<%- include('../../partials/siteFooter') %>

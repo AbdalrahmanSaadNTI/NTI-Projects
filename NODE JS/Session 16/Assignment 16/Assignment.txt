@@ -1,0 +1,28 @@
+        homework :
+        - calculate every order total with product discount field
+        - how much total procducts price every ship company made ?
+        - how many orders every ship company made ?
+========================================================================
+1-Calculate every order total with product discount field:-
+SELECT 
+    `order details`.`OrderID`,
+    SUM(`order details`.`UnitPrice` * `order details`.`Quantity` * (1 - `order details`.`Discount`)) AS orderTotal
+FROM `order details`
+GROUP BY `order details`.`OrderID`;
+========================================================================
+2-How much total products price every ship company made:-
+SELECT 
+    `shippers`.`CompanyName` AS ShipCompany,
+    SUM(`order details`.`UnitPrice` * `order details`.`Quantity` * (1 - `order details`.`Discount`)) AS TotalSales
+FROM `orders`
+JOIN `shippers` ON `orders`.`ShipVia` = `shippers`.`ShipperID`
+JOIN `order details` ON `orders`.`OrderID` = `order details`.`OrderID`
+GROUP BY `shippers`.`CompanyName`;
+========================================================================
+3-How many orders every ship company made:-
+SELECT 
+    `shippers`.`CompanyName` AS ShipCompany,
+    COUNT(DISTINCT `orders`.`OrderID`) AS OrdersCount
+FROM `orders`
+JOIN `shippers` ON `orders`.`ShipVia` = `shippers`.`ShipperID`
+GROUP BY `shippers`.`CompanyName`;

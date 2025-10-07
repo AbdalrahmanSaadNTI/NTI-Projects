@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    padding: 0 5%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+    background: #f7f9fc;
+    color: #223;
+}
+
+
+/* ------ dishes ---------------- */
+.allDishes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.oneDish {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 45%;
+}
+.dishPhoto img {
+    width: 160px;
+    border-radius: 15px;
+    margin: 0 15px;
+}
+
+/* ----------------------------- */
+table {
+    width: 77%;
+    margin: 0 auto;
+}
+tr:nth-child(odd) {
+    background-color: lightskyblue;
+}
+
+/* ---- auth pages ---- */
+.auth-card {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    padding: 24px 28px;
+}
+.auth-card h2 {
+    margin: 0 0 16px 0;
+}
+.form-row { margin-bottom: 12px; }
+.form-row label { display: block; font-weight: 600; margin-bottom: 6px; }
+.form-row input, .form-row select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d8dfeb;
+    border-radius: 8px;
+    background: #fdfefe;
+}
+.form-actions { display: flex; gap: 12px; align-items: center; }
+.form-actions .link { color: #2563eb; text-decoration: none; }
+button { padding: 10px 16px; border: 0; background: #111827; color: #fff; border-radius: 8px; cursor: pointer; }
+button:hover { background: #0b1220; }
+.alert.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; padding: 10px 12px; border-radius: 8px; margin-bottom: 12px; }
+
+/* ---- header/nav ---- */
+h3 { display: flex; align-items: center; gap: 10px; }
+nav { margin: 8px 0 16px; }
+nav a { color: #0f172a; text-decoration: none; margin-right: 8px; }
+nav a:hover { text-decoration: underline; }

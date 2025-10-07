@@ -1,0 +1,74 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Add New Product", user: user}) %>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Add New Product</h2>
+        <a href="/products" class="btn btn-secondary">← Back to Products</a>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
+        <form action="./store" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" name="productName" id="productName" class="form-input" required placeholder="Enter product name">
+            </div>
+            
+            <div class="form-group">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" name="price" id="price" class="form-input" required placeholder="0.00" step="0.01" min="0">
+            </div>
+            
+            <div class="form-group">
+                <label for="categoryID" class="form-label">Category ID</label>
+                <input type="text" name="categoryID" id="categoryID" class="form-input" required placeholder="Enter category ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="categoryName" class="form-label">Category Name</label>
+                <input type="text" name="categoryName" id="categoryName" class="form-input" required placeholder="Enter category name">
+            </div>
+            
+            <div class="form-group">
+                <label for="photo" class="form-label">Product Photo</label>
+                <input type="file" name="photo" id="photo" class="form-input" accept="image/*" onchange="photoPreviewFn(this);">
+                <small style="color: #718096;">Optional: Upload a product image</small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Create Product</button>
+        </form>
+        
+        <div>
+            <h3 style="margin-bottom: 1rem; color: #4a5568;">Photo Preview</h3>
+            <div style="border: 2px dashed #e2e8f0; border-radius: 8px; padding: 2rem; text-align: center; background: #f7fafc;">
+                <img src="" id="photoPreview" alt="Photo preview" style="max-width: 100%; max-height: 300px; border-radius: 8px; display: none;">
+                <div id="noImage" style="color: #a0aec0;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📷</div>
+                    <p>No image selected</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function photoPreviewFn(inputFile) {
+        var file = inputFile.files[0];
+        var preview = document.getElementById("photoPreview");
+        var noImage = document.getElementById("noImage");
+        
+        if(file) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                preview.setAttribute("src", reader.result);
+                preview.style.display = "block";
+                noImage.style.display = "none";
+            }
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = "none";
+            noImage.style.display = "block";
+        }
+    }
+</script>
+
+<%- include('../../partials/siteFooter') %>

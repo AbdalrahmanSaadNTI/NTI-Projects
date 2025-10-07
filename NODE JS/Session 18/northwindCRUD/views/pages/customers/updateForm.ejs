@@ -1,0 +1,59 @@
+<%- include('../../partials/siteHeader', {pageTitle: "Customer Page"}) %>
+<h1>Edit Customer</h1>
+<form action="../updateForm" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<%= customer.id %>">
+    <div>
+        <label for="id">Customer ID</label>
+        <input type="text" id="id" value="<%= customer.id %>" readonly>
+    </div>
+    <div>
+        <label for="ContactName">Contact Name</label>
+        <input type="text" name="ContactName" id="ContactName" value="<%= customer.ContactName %>" required>
+    </div>
+    <div>
+        <label for="CompanyName">Company Name</label>
+        <input type="text" name="CompanyName" id="CompanyName" value="<%= customer.CompanyName %>" required>
+    </div>
+    <div>
+        <label for="ContactTitle">Contact Title</label>
+        <input type="text" name="ContactTitle" id="ContactTitle" value="<%= customer.ContactTitle %>" required>
+    </div>
+    <div>
+        <label for="Address">Address</label>
+        <input type="text" name="Address" id="Address" value="<%= customer.Address %>" required>
+    </div>
+    <div>
+        <label for="City">City</label>
+        <input type="text" name="City" id="City" value="<%= customer.City %>" required>
+    </div>
+    <div>
+        <label for="Region">Region</label>
+        <input type="text" name="Region" id="Region" value="<%= customer.Region || '' %>">
+    </div>
+    <div>
+        <label for="PostalCode">Postal Code</label>
+        <input type="text" name="PostalCode" id="PostalCode" value="<%= customer.PostalCode %>" required>
+    </div>
+    <div>
+        <label for="Country">Country</label>
+        <input type="text" name="Country" id="Country" value="<%= customer.Country %>" required>
+    </div>
+    <div>
+        <label for="Phone">Phone</label>
+        <input type="text" name="Phone" id="Phone" value="<%= customer.Phone %>" required>
+    </div>
+    <div>
+        <label for="Fax">Fax</label>
+        <input type="text" name="Fax" id="Fax" value="<%= customer.Fax || '' %>">
+    </div>
+    <div>
+        <label for="Image">Image</label>
+        <input type="file" name="Image" id="Image">
+        <% if (customer.Image) { %>
+            <br>
+            <img src="<%= customer.Image %>" alt="Customer Image" width="100">
+        <% } %>
+    </div>
+    <button type="submit">Update Customer</button>
+</form>
+<%- include('../../partials/siteFooter') %>

@@ -1,0 +1,38 @@
+<nav class="navbar">
+  <div class="brand">
+    <a routerLink="/" class="brand-link">🛍️ Store</a>
+  </div>
+
+  <div class="nav-actions">
+    <a routerLink="/" class="nav-link">Home</a>
+    <a routerLink="/orders" class="nav-link">Orders</a>
+    <a routerLink="/cart" class="cart-link" aria-label="Cart">
+      <span class="icon">🛒</span>
+      <span class="badge" [attr.aria-label]="'Items in cart: ' + cart.totalQuantity()">{{ cart.totalQuantity() }}</span>
+    </a>
+    
+    <div class="notification-container" *ngIf="auth.user()">
+      <div class="notification-icon" [class.has-notifications]="notificationSvc.unreadCount() > 0" (click)="markNotificationsAsRead()">
+        <i class="material-icons">notifications</i>
+        <span class="notification-badge" *ngIf="notificationSvc.unreadCount() > 0">{{ notificationSvc.unreadCount() }}</span>
+      </div>
+      <div class="notification-dropdown" *ngIf="notificationSvc.notifications().length > 0">
+        <div class="notification-item" *ngFor="let notification of notificationSvc.notifications()" [class.unread]="!notification.read">
+          <div class="notification-message">{{ notification.message }}</div>
+          <div class="notification-time">{{ notification.timestamp | date:'short' }}</div>
+        </div>
+        <div class="notification-empty" *ngIf="notificationSvc.notifications().length === 0">
+          No notifications
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="auth.user(); else showLogin">
+      <span class="welcome">Welcome {{ auth.user()?.username }}</span>
+      <button class="logout" (click)="logout()">Logout</button>
+    </ng-container>
+    <ng-template #showLogin>
+      <a routerLink="/login" class="nav-link">Login</a>
+    </ng-template>
+  </div>
+</nav>

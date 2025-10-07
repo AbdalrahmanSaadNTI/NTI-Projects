@@ -1,0 +1,12 @@
+.orders-page { max-width: 800px; margin: 24px auto; padding: 0 16px; }
+.orders-list { display: grid; gap: 16px; }
+.order { border: 1px solid #e0e0e0; border-radius: 12px; padding: 14px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.meta { color: #666; font-size: 14px; }
+.totals { display: flex; gap: 8px; align-items: center; font-weight: 600; }
+.badge { display: inline-block; padding: 4px 8px; border-radius: 999px; background: #f1f5f9; color: #334155; font-size: 12px; }
+.badge.primary { background: #e3f2fd; color: #1565c0; }
+ul { margin: 0; padding-left: 16px; }
+
+
+

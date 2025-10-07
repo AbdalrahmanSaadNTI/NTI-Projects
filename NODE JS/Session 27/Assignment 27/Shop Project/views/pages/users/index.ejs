@@ -1,0 +1,114 @@
+<%- include('../../partials/siteHeader', { pageTitle: "Users Management", user: user }) %>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Users Management</h2>
+        <a href="/users/create" class="btn btn-primary">+ Add New User</a>
+    </div>
+    
+    <% if (typeof users !== 'undefined' && users.length > 0) { %>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach((user) => { %>
+                        <tr>
+                            <td><%= user.fullName %></td>
+                            <td><%= user.userName %></td>
+                            <td>
+                                <span class="status-badge status-<%= user.role.toLowerCase().replace('_', '-') %>">
+                                    <%= user.role.replace('_', ' ').toUpperCase() %>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="status-badge <%= user.isActive ? 'status-completed' : 'status-pending' %>">
+                                    <%= user.isActive ? 'Active' : 'Inactive' %>
+                                </span>
+                            </td>
+                            <td><%= new Date(user.createdAt).toLocaleDateString() %></td>
+                            <td>
+                                <a href="/users/<%= user.id %>" class="btn btn-secondary">View</a>
+                                <button onclick="toggleUserStatus('<%= user.id %>', <%= user.isActive %>)" class="btn <%= user.isActive ? 'btn-danger' : 'btn-success' %>">
+                                    <%= user.isActive ? 'Deactivate' : 'Activate' %>
+                                </button>
+                                <button onclick="changePassword('<%= user.id %>')" class="btn btn-primary">Change Password</button>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <div class="empty-state">
+            <div class="empty-state-icon">👥</div>
+            <h3 class="empty-state-title">No Users Found</h3>
+            <p class="empty-state-description">No users are registered in the system.</p>
+            <a href="/users/create" class="btn btn-primary">Add First User</a>
+        </div>
+    <% } %>
+</div>
+
+<script>
+    function toggleUserStatus(userId, currentStatus) {
+        const action = currentStatus ? 'deactivate' : 'activate';
+        if (confirm(`Are you sure you want to ${action} this user?`)) {
+            fetch(`/users/${userId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ isActive: !currentStatus })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    location.reload();
+                } else {
+                    alert('Error updating user status');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error updating user status');
+            });
+        }
+    }
+
+    function changePassword(userId) {
+        const newPassword = prompt('Enter new password (minimum 6 characters):');
+        if (newPassword && newPassword.length >= 6) {
+            fetch(`/users/${userId}/password`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ newPassword: newPassword })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert('Password changed successfully');
+                } else {
+                    alert('Error changing password');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error changing password');
+            });
+        } else if (newPassword) {
+            alert('Password must be at least 6 characters long');
+        }
+    }
+</script>
+
+<%- include('../../partials/siteFooter') %>

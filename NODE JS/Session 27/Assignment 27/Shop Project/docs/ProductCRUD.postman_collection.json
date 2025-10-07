@@ -1,0 +1,444 @@
+{
+  "info": {
+    "name": "Product CRUD API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "3bbf6f3c-2a8a-4a96-9f4a-0dcf8a29a0e1"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"John Doe\",\n  \"userName\": \"john\",\n  \"password\": \"P@ssw0rd\",\n  \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Signin (captures token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userName\": \"john\",\n  \"password\": \"P@ssw0rd\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/signin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "signin"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch(e) { json = {}; }",
+                  "if (json && json.token) {",
+                  "  pm.collectionVariables.set('token', json.token);",
+                  "}",
+                  "pm.test('Token captured', function () { pm.expect(pm.collectionVariables.get('token')).to.be.a('string'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "API (Protected)",
+      "item": [
+        {
+          "name": "List products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List my products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/myProducts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "myProducts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Show product by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/products/show/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "products",
+                "show",
+                ":id"
+              ],
+              "variable": [
+                { "key": "id", "value": "REPLACE_WITH_ID" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create product (multipart)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "Sample product", "type": "text" },
+                { "key": "price", "value": "99.99", "type": "text" },
+                { "key": "description", "value": "Sample description", "type": "text" },
+                { "key": "photo", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/products/store",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "products",
+                "store"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get product for update",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/products/updateForm/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "products",
+                "updateForm",
+                ":id"
+              ],
+              "variable": [
+                { "key": "id", "value": "REPLACE_WITH_ID" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update product (PUT, multipart)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "id", "value": "REPLACE_WITH_ID", "type": "text" },
+                { "key": "title", "value": "Sample product updated", "type": "text" },
+                { "key": "price", "value": "129.99", "type": "text" },
+                { "key": "description", "value": "Updated description", "type": "text" },
+                { "key": "photo", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/products/update",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "products",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1.0/products/destroy/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1.0",
+                "products",
+                "destroy",
+                ":id"
+              ],
+              "variable": [
+                { "key": "id", "value": "REPLACE_WITH_ID" }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Web (HTML Views)",
+      "item": [
+        {
+          "name": "List products (HTML)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Show product (HTML)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/show/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "show",
+                ":id"
+              ],
+              "variable": [
+                { "key": "id", "value": "REPLACE_WITH_ID" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create form (HTML)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/createForm",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "createForm"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Store product (HTML flow)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "Sample product", "type": "text" },
+                { "key": "price", "value": "99.99", "type": "text" },
+                { "key": "description", "value": "Sample description", "type": "text" },
+                { "key": "photo", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/store",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "store"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update form (HTML)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/updateForm/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "updateForm",
+                ":id"
+              ],
+              "variable": [
+                { "key": "id", "value": "REPLACE_WITH_ID" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update product (HTML flow)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "id", "value": "REPLACE_WITH_ID", "type": "text" },
+                { "key": "title", "value": "Sample product updated", "type": "text" },
+                { "key": "price", "value": "129.99", "type": "text" },
+                { "key": "description", "value": "Updated description", "type": "text" },
+                { "key": "photo", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/update",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete product (HTML flow)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/destroy/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "destroy",
+                ":id"
+              ],
+              "variable": [
+                { "key": "id", "value": "REPLACE_WITH_ID" }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
+
+
+

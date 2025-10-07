@@ -1,0 +1,6 @@
+navbar, if not logged in : add "login"
+
+else, add fullname 
+
+
+creating order page to be saved with user's fullname
