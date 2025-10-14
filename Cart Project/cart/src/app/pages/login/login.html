@@ -1,0 +1,22 @@
+<section class="auth-page">
+  <h2>Login</h2>
+
+  <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <form (ngSubmit)="submit()" #f="ngForm" class="auth-form">
+    <label>
+      Username
+      <input name="username" [(ngModel)]="username" required placeholder="john_doe" />
+    </label>
+
+    <label>
+      Password
+      <input name="password" [(ngModel)]="password" type="password" required placeholder="••••••••" />
+    </label>
+
+    <button type="submit" [disabled]="!username.trim() || !password">Login</button>
+  </form>
+</section>
+
+
+

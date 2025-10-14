@@ -1,0 +1,31 @@
+@if (loading) {
+<div class="skeleton-grid">
+  <div class="skeleton-card" aria-hidden="true"></div>
+  <div class="skeleton-card" aria-hidden="true"></div>
+  <div class="skeleton-card" aria-hidden="true"></div>
+  <div class="skeleton-card" aria-hidden="true"></div>
+  <div class="skeleton-card" aria-hidden="true"></div>
+</div>
+} @else {
+<section class="home-header">
+  <h1 class="title">Store Products</h1>
+  <p class="subtitle">Discover our latest arrivals and best deals</p>
+</section>
+
+<div class="products-grid">
+  @for (product of products; let i = $index; track product._id) {
+    <article class="product-card" [style.animation-delay]="(i * 0.08) + 's'">
+      <div class="media">
+        <img class="photo" [src]="'http://localhost:3001/img/uploades/' + product.photo" [alt]="product.productName" loading="lazy" />
+        <span class="price-badge">{{ product.price | currency }}</span>
+      </div>
+      <div class="content">
+        <h3 class="name" title="{{ product.productName }}">{{ product.productName }}</h3>
+        <button type="button" class="add-btn" (click)="addToCart(product)" aria-label="Add {{ product.productName }} to cart">
+          Add to Cart
+        </button>
+      </div>
+    </article>
+  }
+</div>
+}
