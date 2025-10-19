@@ -1,0 +1,64 @@
+<%- include('../../partials/siteHeader', { pageTitle: "Orders", user: user }) %>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Orders Management</h2>
+        <a href="/orders/create" class="btn btn-primary">+ Add New Order</a>
+    </div>
+    
+    <!-- Filter Tabs -->
+    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0;">
+        <a href="/orders" class="btn <%= !req.query.status ? 'btn-primary' : 'btn-secondary' %>">All Orders</a>
+        <a href="/orders?status=Pending" class="btn <%= req.query.status === 'Pending' ? 'btn-primary' : 'btn-secondary' %>">Pending</a>
+        <a href="/orders?status=In Progress" class="btn <%= req.query.status === 'In Progress' ? 'btn-primary' : 'btn-secondary' %>">In Progress</a>
+        <a href="/orders?status=Completed" class="btn <%= req.query.status === 'Completed' ? 'btn-primary' : 'btn-secondary' %>">Completed</a>
+    </div>
+    
+    <% if (typeof orders !== 'undefined' && orders.length > 0) { %>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Phone</th>
+                        <th>Products</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach((order) => { %>
+                        <tr>
+                            <td>#<%= order.id.substring(0, 8) %></td>
+                            <td><%= order.customer.customerName %></td>
+                            <td><%= order.customer.customerPhone %></td>
+                            <td><%= order.products ? order.products.length : 0 %> items</td>
+                            <td>
+                                <% const latestStatus = order.status && order.status.length > 0 ? order.status[order.status.length - 1] : { statusName: 'Pending' } %>
+                                <span class="status-badge status-<%= latestStatus.statusName.toLowerCase().replace(' ', '-') %>">
+                                    <%= latestStatus.statusName %>
+                                </span>
+                            </td>
+                            <td><%= new Date(order.orderDateTime).toLocaleDateString() %></td>
+                            <td>
+                                <a href="/orders/<%= order.id %>" class="btn btn-secondary">View</a>
+                                <a href="/orders/<%= order.id %>/edit" class="btn btn-primary">Edit</a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <div class="empty-state">
+            <div class="empty-state-icon">📋</div>
+            <h3 class="empty-state-title">No Orders Found</h3>
+            <p class="empty-state-description">No orders match your current filter. Try adjusting your search criteria.</p>
+            <a href="/orders/create" class="btn btn-primary">Create First Order</a>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../../partials/siteFooter') %>

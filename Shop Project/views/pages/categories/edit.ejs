@@ -1,0 +1,26 @@
+<%- include('../../partials/siteHeader', { pageTitle: "Edit Category", user: user }) %>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Edit Category</h2>
+    </div>
+    <div class="card-body">
+        <form action="/categories/<%= categoryData.id %>/edit" method="POST">
+            <div class="form-group">
+                <label for="categoryName">Category Name</label>
+                <input
+                    type="text"
+                    id="categoryName"
+                    name="categoryName"
+                    class="form-control"
+                    value="<%= categoryData.categoryName %>"
+                    required
+                >
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="/categories" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<%- include('../../partials/siteFooter') %>

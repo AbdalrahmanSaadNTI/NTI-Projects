@@ -1,0 +1,86 @@
+<%- include('../../partials/siteHeader', { pageTitle: "Reports", user: user }) %>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Reports & Analytics</h2>
+        <p style="color: #718096; margin: 0;">View detailed reports about your shop's performance</p>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+    <!-- Product Reports -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Product Reports</h3>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <a href="/reports/products" class="btn btn-primary">All Products Report</a>
+            <a href="/reports/products/by-category" class="btn btn-secondary">Products by Category</a>
+            <a href="/reports/products/low-stock" class="btn btn-secondary">Low Stock Alert</a>
+        </div>
+    </div>
+
+    <!-- Order Reports -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Order Reports</h3>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <a href="/reports/orders" class="btn btn-primary">All Orders Report</a>
+            <a href="/reports/orders/by-status" class="btn btn-secondary">Orders by Status</a>
+            <a href="/reports/orders/by-date" class="btn btn-secondary">Orders by Date Range</a>
+        </div>
+    </div>
+</div>
+
+<!-- Date Range Filter -->
+<div class="card" style="margin-top: 1.5rem;">
+    <div class="card-header">
+        <h3 class="card-title">Custom Date Range Report</h3>
+    </div>
+    <form method="GET" action="/reports/orders/date-range" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end;">
+        <div class="form-group">
+            <label class="form-label">Start Date</label>
+            <input type="date" name="startDate" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">End Date</label>
+            <input type="date" name="endDate" class="form-input" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Generate Report</button>
+    </form>
+</div>
+
+<!-- Quick Stats -->
+<div class="stats-grid" style="margin-top: 2rem;">
+    <div class="stat-card">
+        <div class="stat-number" id="totalProducts">-</div>
+        <div class="stat-label">Total Products</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" id="totalOrders">-</div>
+        <div class="stat-label">Total Orders</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" id="pendingOrders">-</div>
+        <div class="stat-label">Pending Orders</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" id="completedOrders">-</div>
+        <div class="stat-label">Completed Orders</div>
+    </div>
+</div>
+
+<script>
+    // Load quick stats
+    document.addEventListener('DOMContentLoaded', function() {
+        // This would typically fetch data from your API
+        // For now, we'll show placeholder values
+        document.getElementById('totalProducts').textContent = '0';
+        document.getElementById('totalOrders').textContent = '0';
+        document.getElementById('pendingOrders').textContent = '0';
+        document.getElementById('completedOrders').textContent = '0';
+    });
+</script>
+
+<%- include('../../partials/siteFooter') %>
