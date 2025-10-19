@@ -1,0 +1,90 @@
+<%- include('../partials/headerLayout.ejs', {pageName: "Review Movies" , pathLevel: "../" }) %>
+
+    <!-- Blank Start -->
+    <div class="col-sm-12 col-xl-12  p-4">
+        <%if(movie.length > 0){%>
+
+                <table class="table table-striped py-4">                    
+                    <tbody>
+                
+                    <tr>
+                        <th>Movie Title</th><th><%=movie[0].title%></th>
+                    </tr>
+                    <tr>
+                        <th>Movie Year</th><th><%=movie[0].year%></th>
+                    </tr>
+                    <tr>
+                        <th>Movie Cast</th>
+                        <%if(!movie[0].cast || movie[0].cast.length == 0) {%>
+                            <th>No Cast Found</th>
+                        <%} else {%>
+                            <th>
+                                <% movie[0].cast.forEach(function(castMember, index) { %>
+                                    <%= castMember %><% if (index < movie[0].cast.length - 1) { %>, <% } %>
+                                <% }); %>
+                            </th>
+                        <%}%>
+                    </tr>
+                    <tr>
+                        <th>Movie Genres</th>
+                        <%if(!movie[0].genres || movie[0].genres.length == 0) {%>
+                            <th>No Genres Found</th>
+                        <%} else {%>
+                            <th>
+                                <% movie[0].genres.forEach(function(genre, index) { %>
+                                    <%= genre %><% if (index < movie[0].genres.length - 1) { %>, <% } %>
+                                <% }); %>
+                            </th>
+                        <%}%>
+                    </tr>
+                    <tr>
+                        <th>Created at</th>
+                        <th><%=new Date(movie[0].createdAt).toLocaleString() %></th>
+                    </tr>
+                    <tr>
+                        <th>Editor</th>
+                        <th><%=movie[0].createdBy.fullname %></th>
+                    </tr>
+                                        
+                    </tbody>
+                </table>
+
+                <form action="/dashboard/reviewMovieDecision" method="post">
+                    <input type="hidden" name="movieID" value="<%=movie[0]._id%>">
+                    
+                    <div class="mb-3">
+                        <label for="adminNote" class="form-label">Admin Note (Required for rejection):</label>
+                        <textarea class="form-control" id="adminNote" name="adminNote" rows="3" placeholder="Enter reason for rejection or any notes..."></textarea>
+                    </div>
+                    
+                    <div class="d-flex gap-3">
+                        <button type="submit" name="decision" value="approve" class="btn btn-success py-3 px-5">
+                            Approve
+                        </button>
+                        <button type="submit" name="decision" value="reject" class="btn btn-danger py-3 px-5" onclick="return confirmRejection()">
+                            Reject
+                        </button>
+                    </div>
+                </form>
+
+                <script>
+                    function confirmRejection() {
+                        const note = document.getElementById('adminNote').value.trim();
+                        if (!note) {
+                            alert('Please provide an admin note explaining the reason for rejection.');
+                            return false;
+                        }
+                        return confirm('Are you sure you want to reject this movie? This action cannot be undone.');
+                    }
+                </script>
+        <%} else {%>
+            <h3>No Movies with this ID !!!!</h3>
+        <%}%>
+
+
+    </div>
+    <!-- Blank End -->
+
+
+
+    <%- include('../partials/footerLayout.ejs', { pathLevel: "../" }) %>

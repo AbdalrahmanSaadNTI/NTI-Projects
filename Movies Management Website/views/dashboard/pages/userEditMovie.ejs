@@ -1,0 +1,72 @@
+<%- include('../partials/headerLayout.ejs', {pageName: "Edit My Movies" , pathLevel: "../" }) %>
+
+<!-- Blank Start -->
+<div class="col-sm-12 col-xl-12 p-4">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">My Rejected Movies</h6>
+
+        <% if (msg) { %>
+            <div class="alert alert-info">
+                <%= msg %>
+            </div>
+        <% } %>
+
+        <% if (movies && movies.length > 0) { %>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Movie Title</th>
+                            <th>Year</th>
+                            <th>Genres</th>
+                            <th>Admin Note</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% movies.forEach(movie => { %>
+                            <tr>
+                                <td><%= movie.title %></td>
+                                <td><%= movie.year %></td>
+                                <td>
+                                    <% if (movie.genres && movie.genres.length > 0) { %>
+                                        <% movie.genres.forEach((genre, index) => { %>
+                                            <span class="badge bg-secondary me-1"><%= genre %></span>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <span class="text-muted">No genres</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (movie.adminNote) { %>
+                                        <span class="text-danger"><%= movie.adminNote %></span>
+                                    <% } else { %>
+                                        <span class="text-muted">No note provided</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <a href="/dashboard/editMovieForm?movieId=<%= movie._id %>" class="btn btn-warning btn-sm">
+                                        Edit Movie
+                                    </a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <div class="alert alert-info">
+                <h5>No Rejected Movies</h5>
+                <p>You don't have any rejected movies to edit at the moment.</p>
+                <a href="/dashboard/userAddNewMovie" class="btn btn-primary">Add New Movie</a>
+            </div>
+        <% } %>
+
+        <div class="mt-4">
+            <a href="/dashboard/index" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+<!-- Blank End -->
+
+<%- include('../partials/footerLayout.ejs', { pathLevel: "../" }) %>
