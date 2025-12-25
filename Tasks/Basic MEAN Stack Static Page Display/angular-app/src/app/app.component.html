@@ -1,0 +1,59 @@
+<div class="container">
+  <header class="header">
+    <h1>{{ title }}</h1>
+    <p class="subtitle">{{ description }}</p>
+  </header>
+
+  <main class="content">
+    <section class="text-section">
+      <h2>About This Application</h2>
+      <p>
+        This is a basic MEAN stack application demonstrating a simple static page display.
+        The application uses:
+      </p>
+      <ul class="tech-list">
+        <li><strong>M</strong>ongoDB - Database (not used in this static example)</li>
+        <li><strong>E</strong>xpress - Web application framework for Node.js</li>
+        <li><strong>A</strong>ngular - Frontend framework for building web applications</li>
+        <li><strong>N</strong>ode.js - JavaScript runtime environment</li>
+      </ul>
+      <p>
+        This page serves as a foundation for building more complex MEAN stack applications.
+        It demonstrates the basic setup and integration of all four technologies.
+      </p>
+    </section>
+
+    <section class="images-section">
+      <h2>Static Images Gallery</h2>
+      <div class="image-grid">
+        <div class="image-card" *ngFor="let image of images">
+          <img [src]="image.url" [alt]="image.alt" class="gallery-image">
+          <h3>{{ image.title }}</h3>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <h2>Features</h2>
+      <div class="features">
+        <div class="feature-card">
+          <h3>🚀 Fast Setup</h3>
+          <p>Quick and easy MEAN stack configuration</p>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Responsive</h3>
+          <p>Works seamlessly on all devices</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎨 Modern UI</h3>
+          <p>Clean and attractive user interface</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 MEAN Stack Static Page. Built with Angular, Express, and Node.js</p>
+  </footer>
+</div>
+

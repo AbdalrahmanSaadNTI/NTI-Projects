@@ -1,0 +1,114 @@
+<div class="container">
+  <h1>Task Manager</h1>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Title *</label>
+      <input
+        type="text"
+        id="title"
+        [(ngModel)]="currentTask.title"
+        name="title"
+        placeholder="Enter task title"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        [(ngModel)]="currentTask.description"
+        name="description"
+        placeholder="Enter task description"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <div class="checkbox-group">
+        <input
+          type="checkbox"
+          id="completed"
+          [(ngModel)]="currentTask.completed"
+          name="completed"
+        />
+        <label for="completed">Completed</label>
+      </div>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="isLoading">
+        {{ isEditing ? 'Update Task' : 'Create Task' }}
+      </button>
+      <button
+        type="button"
+        *ngIf="isEditing"
+        (click)="cancelEdit()"
+        class="btn-secondary"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <div class="task-list">
+    <h2>Tasks ({{ tasks.length }})</h2>
+
+    <div *ngIf="isLoading" class="loading">Loading tasks...</div>
+
+    <div *ngIf="!isLoading && tasks.length === 0" class="loading">
+      No tasks found. Create your first task above!
+    </div>
+
+    <div
+      *ngFor="let task of tasks"
+      class="task-item"
+      [class.completed]="task.completed"
+    >
+      <div class="task-header">
+        <div class="task-title">{{ task.title }}</div>
+        <span
+          class="task-status"
+          [class.status-completed]="task.completed"
+          [class.status-pending]="!task.completed"
+        >
+          {{ task.completed ? 'Completed' : 'Pending' }}
+        </span>
+      </div>
+      <div class="task-description" *ngIf="task.description">
+        {{ task.description }}
+      </div>
+      <div class="task-actions">
+        <button
+          (click)="toggleComplete(task)"
+          class="btn-success"
+          *ngIf="!task.completed"
+        >
+          Mark Complete
+        </button>
+        <button
+          (click)="toggleComplete(task)"
+          class="btn-secondary"
+          *ngIf="task.completed"
+        >
+          Mark Incomplete
+        </button>
+        <button (click)="editTask(task)" class="btn-secondary">
+          Edit
+        </button>
+        <button (click)="deleteTask(task._id)" class="btn-danger">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
