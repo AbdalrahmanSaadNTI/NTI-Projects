@@ -1,7 +1,0 @@
-node_modules/
-angular-app/node_modules/
-angular-app/dist/
-.DS_Store
-*.log
-.env
-
